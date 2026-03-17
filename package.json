@@ -12,6 +12,7 @@
   "dependencies": {
     "@mui/icons-material": "^7.3.8",
     "@tabler/icons-react": "^3.40.0",
+    "@tailwindcss/vite": "^4.2.1",
     "lucide-react": "^0.576.0",
     "phosphor-react": "^1.4.1",
     "react": "^19.2.0",
