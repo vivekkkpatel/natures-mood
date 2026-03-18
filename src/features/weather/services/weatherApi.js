@@ -3,12 +3,12 @@
 
 const BASE_URL = "/api";
 
-export const searchCity = async (query) => {
-  const res = await fetch(
-    `${BASE_URL}/search.json?key=${API_KEY}&q=${query}`
-  );
-  return res.json();
-};
+// export const searchCity = async (query) => {
+//   const res = await fetch(
+//     `${BASE_URL}/search.json?key=${API_KEY}&q=${query}`
+//   );
+//   return res.json();
+// };
 
 // export const getForecast = async (city) => {
 //   const res = await fetch(
@@ -110,3 +110,11 @@ export const getAllWeather = async (city) => {
     throw new Error("Weather fetch failed");
   }
 }
+
+export const searchCity = async (query) => {
+  const res = await fetch(`/api/search?query=${query}`);
+
+  if (!res.ok) throw new Error("Search failed");
+
+  return res.json();
+};
