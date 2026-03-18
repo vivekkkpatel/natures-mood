@@ -18,6 +18,7 @@ import BrandLoader from "../../components/BrandLoader";
 import AstronomyCard from "./components/AstronomyCard";
 import YesterdayCard from "./components/YesterdayCard";
 import ErrorMessage from "../../components/ErrorMessage";
+import { getAllWeather } from "./services/weatherApi";
 
 import { ArrowUpRight } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
@@ -33,50 +34,98 @@ const WeatherPage = () => {
   const [forecast, setForecast] = useState(null);
   const [astronomy, setAstronomy] = useState(null);
   const [yesterday, setYesterday] = useState(null);
-  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
+  // const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
 
-  useEffect(() => {
-    const handleResize = () => setIsDesktop(window.innerWidth >= 1024);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  // useEffect(() => {
+  //   const handleResize = () => setIsDesktop(window.innerWidth >= 1024);
+  //   window.addEventListener("resize", handleResize);
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, []);
 
-  const fetchWeather = async (city) => {
-    setWeather(null);
-    setForecast(null);
-    setAstronomy(null);
-    setYesterday(null);
+  const [isDesktop, setIsDesktop] = useState(false);
 
-    try {
-      setLoading(true);
-      setError(null);
+useEffect(() => {
+  const handleResize = () => setIsDesktop(window.innerWidth >= 1024);
+  handleResize();
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
 
-      const weatherData = await getCurrentWeather(city);
-      setWeather(weatherData);
+const fetchWeather = async (city) => {
+  setWeather(null);
+  setForecast(null);
+  setAstronomy(null);
+  setYesterday(null);
 
-      try {
-        const forecastData = await getForecast(city);
-        setForecast(forecastData.forecast);
-      } catch {
-        console.warn("Forecast unavailable");
-      }
+  try {
+    setLoading(true);
+    setError(null);
 
-      try {
-        const astronomyData = await getAstronomy(city);
-        setAstronomy(astronomyData.astronomy.astro);
-      } catch {}
+    // 🔥 Single API call
+    const data = await getAllWeather(city);
 
-      try {
-        const yesterdayData = await getYesterdayWeather(city);
-        setYesterday(yesterdayData.forecast.forecastday[0]);
-      } catch {}
-    } catch (err) {
-      console.error(err);
-      setError("City not found");
-    } finally {
-      setLoading(false);
+    // ✅ REQUIRED (main data)
+    setWeather(data.current);
+
+    // ✅ OPTIONAL (safe handling)
+    if (data.forecast) {
+      setForecast(data.forecast.forecast);
+    } else {
+      console.warn("Forecast unavailable");
     }
-  };
+
+    if (data.astronomy) {
+      setAstronomy(data.astronomy.astronomy.astro);
+    }
+
+    if (data.history) {
+      setYesterday(data.history.forecast.forecastday[0]);
+    }
+
+  } catch (err) {
+    console.error(err);
+    setError("City not found or API failed");
+  } finally {
+    setLoading(false);
+  }
+};
+
+  // const fetchWeather = async (city) => {
+  //   setWeather(null);
+  //   setForecast(null);
+  //   setAstronomy(null);
+  //   setYesterday(null);
+
+  //   try {
+  //     setLoading(true);
+  //     setError(null);
+
+  //     const weatherData = await getCurrentWeather(city);
+  //     setWeather(weatherData);
+
+  //     try {
+  //       const forecastData = await getForecast(city);
+  //       setForecast(forecastData.forecast);
+  //     } catch {
+  //       console.warn("Forecast unavailable");
+  //     }
+
+  //     try {
+  //       const astronomyData = await getAstronomy(city);
+  //       setAstronomy(astronomyData.astronomy.astro);
+  //     } catch {}
+
+  //     try {
+  //       const yesterdayData = await getYesterdayWeather(city);
+  //       setYesterday(yesterdayData.forecast.forecastday[0]);
+  //     } catch {}
+  //   } catch (err) {
+  //     console.error(err);
+  //     setError("City not found");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   useEffect(() => {
     if (!weather) {
