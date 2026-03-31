@@ -2,7 +2,7 @@
 
 A modern weather web application that provides real-time weather updates, forecasts, air quality data, and astronomy insights with a clean and responsive UI.  A modern, immersive weather application that doesn't just show weather data, it makes you feel the weather.
 
-**Every pixel on this screen is driven by real weather data, the sky you see is the sky that city sees right now.**
+**Every pixel on the screen is driven by real weather data, the sky you see is the sky that city sees right now.**
 
 🔗 **Live Demo:** https://natures-mood.vercel.app
 
@@ -12,6 +12,8 @@ A modern weather web application that provides real-time weather updates, foreca
 The name “Nature's Mood” represents how weather reflects the mood of nature. Just like human moods change, nature also changes its mood through different weather conditions like sunshine, rain, clouds, storms, or snow through weather data and visual effects, helping users understand the atmosphere in a more engaging way. So, Basically Nature’s Moods are weathers. That’s what my project shows. The application shows these different "moods" of nature.
 
 Also, logo is designed as a circular weather cycle that represents different atmospheric conditions. the circular shape contains multiple weather elements. The circular design represents the continuous cycle of weather changes throughout the day and seasons. The gradient colors represent transitions between different weather states such as daylight, sunset, night, rain, and clouds.  The logo visually represents the changing moods of nature throughout the day and across different weather conditions.
+
+---
 
 ## Features
 
