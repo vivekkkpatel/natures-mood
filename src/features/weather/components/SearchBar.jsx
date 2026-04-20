@@ -40,8 +40,8 @@ const SearchBar = ({ onSelectCity }) => {
     skipSearchRef.current = true;
     setQuery(`${city.name}, ${city.region}, ${city.country}`);
     setSuggestions([]);
-    // onSelectCity(`${city.name}, ${city.country}`);
-    onSelectCity(city.name);
+    onSelectCity(`${city.name}, ${city.country}`);
+    //onSelectCity(city.name);
     setQuery("");
   };
 
